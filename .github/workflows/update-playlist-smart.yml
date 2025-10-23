@@ -106,11 +106,12 @@ jobs:
           SMART_FINDS="${{ steps.stats.outputs.smart_finds }}"
           HIGH_CONF="${{ steps.stats.outputs.high_conf }}"
           UPDATED_TIME=$(date -u +"%Y-%m-%d %H:%M UTC")
+          REPO="${{ github.repository }}"
           
-          cat > README.md << 'EOF'
+          cat > README.md << EOF
 # 📺 IPTV Playlist Generator - SMART Geo-Detection
 
-![Status](https://github.com/${{ github.repository }}/actions/workflows/update-playlist-smart.yml/badge.svg)
+![Status](https://github.com/${REPO}/actions/workflows/update-playlist-smart.yml/badge.svg)
 ![Channels](https://img.shields.io/badge/channels-${CHANNELS}-success)
 ![Quality](https://img.shields.io/badge/quality-1080p+-blue)
 ![Smart](https://img.shields.io/badge/detection-geo--optimized-brightgreen)
