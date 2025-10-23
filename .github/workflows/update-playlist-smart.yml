@@ -500,4 +500,4 @@ EOF
           commit_message: "🔄 SMART Update: ${{ steps.validate.outputs.channels }} channels | VN:${{ steps.stats.outputs.vn_servers }} SG:${{ steps.stats.outputs.sg_servers }} | Smart:${{ steps.stats.outputs.smart_finds }}"
           file_pattern: "${{ env.OUTPUT_FILENAME }} README.md iptv_generator.log"
           commit_user_name: IPTV Smart Bot
-          commit_user_email: actions@github.com
+          commit_user_email: fan7gi@gmail.com
