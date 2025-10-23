@@ -4,17 +4,16 @@
 # Core async HTTP client
 aiohttp==3.9.1
 
-# DNS resolution (included with aiohttp but explicit for clarity)
+# DNS resolution (speeds up IP lookups)
 aiodns==3.1.1
 
 # Character encoding detection (helps with M3U parsing)
+# Note: Using chardet instead of cchardet (cchardet has issues with Python 3.11+)
 chardet==5.2.0
 
 # Async utilities
 asyncio==3.4.3
 
-# Optional: Speed up DNS resolution
-cchardet==2.1.7
-
 # Optional: Faster async loops (recommended for production)
+# Only works on Linux/Mac, not Windows
 uvloop==0.19.0; sys_platform != 'win32'
