@@ -87,16 +87,44 @@ jobs:
       - name: Extract Smart Statistics
         id: stats
         run: |
-          # Extract statistics from log file
-          VN_SERVERS=$(grep "VN servers:" iptv_generator.log | tail -1 | grep -oP '\d+' || echo "0")
-          SG_SERVERS=$(grep "SG servers:" iptv_generator.log | tail -1 | grep -oP '\d+' || echo "0")
-          SMART_FINDS=$(grep "SMART FINDS:" iptv_generator.log | tail -1 | grep -oP '\d+' | head -1 || echo "0")
-          HIGH_CONF=$(grep "High confidence" iptv_generator.log | tail -1 | grep -oP '\d+' | head -1 || echo "0")
+          # Extract statistics from log file with safer parsing
+          VN_SERVERS="0"
+          SG_SERVERS="0"
+          SMART_FINDS="0"
+          HIGH_CONF="0"
           
-          echo "vn_servers=$VN_SERVERS" >> $GITHUB_OUTPUT
-          echo "sg_servers=$SG_SERVERS" >> $GITHUB_OUTPUT
-          echo "smart_finds=$SMART_FINDS" >> $GITHUB_OUTPUT
-          echo "high_conf=$HIGH_CONF" >> $GITHUB_OUTPUT
+          if [ -f "iptv_generator.log" ]; then
+            # Extract VN servers count
+            VN_LINE=$(grep "VN servers:" iptv_generator.log | tail -1 || echo "")
+            if [ -n "$VN_LINE" ]; then
+              VN_SERVERS=$(echo "$VN_LINE" | grep -oE '[0-9]+' | head -1 || echo "0")
+            fi
+            
+            # Extract SG servers count
+            SG_LINE=$(grep "SG servers:" iptv_generator.log | tail -1 || echo "")
+            if [ -n "$SG_LINE" ]; then
+              SG_SERVERS=$(echo "$SG_LINE" | grep -oE '[0-9]+' | head -1 || echo "0")
+            fi
+            
+            # Extract SMART FINDS count
+            SMART_LINE=$(grep "SMART FINDS:" iptv_generator.log | tail -1 || echo "")
+            if [ -n "$SMART_LINE" ]; then
+              SMART_FINDS=$(echo "$SMART_LINE" | grep -oE '[0-9]+' | head -1 || echo "0")
+            fi
+            
+            # Extract high confidence count
+            CONF_LINE=$(grep "High confidence" iptv_generator.log | tail -1 || echo "")
+            if [ -n "$CONF_LINE" ]; then
+              HIGH_CONF=$(echo "$CONF_LINE" | grep -oE '[0-9]+' | head -1 || echo "0")
+            fi
+          fi
+          
+          echo "vn_servers=${VN_SERVERS}" >> $GITHUB_OUTPUT
+          echo "sg_servers=${SG_SERVERS}" >> $GITHUB_OUTPUT
+          echo "smart_finds=${SMART_FINDS}" >> $GITHUB_OUTPUT
+          echo "high_conf=${HIGH_CONF}" >> $GITHUB_OUTPUT
+          
+          echo "📊 Extracted stats: VN=${VN_SERVERS}, SG=${SG_SERVERS}, Smart=${SMART_FINDS}, HighConf=${HIGH_CONF}"
 
       - name: Generate README
         run: |
