@@ -1,6 +1,6 @@
 # 📺 IPTV Playlist Generator - SMART Geo-Detection
 
-![Status](https://github.com/susuint/gittv-vn/actions/workflows/update-playlist-smart.yml/badge.svg) ![Channels](https://img.shields.io/badge/channels-633-success) ![Quality](https://img.shields.io/badge/quality-1080p+-blue) ![Smart](https://img.shields.io/badge/detection-geo--optimized-brightgreen) ![Last Updated](https://img.shields.io/badge/updated-2025-10-24%2000:53%20UTC-blue)
+![Status](https://github.com/susuint/gittv-vn/actions/workflows/update-playlist-smart.yml/badge.svg) ![Channels](https://img.shields.io/badge/channels-620-success) ![Quality](https://img.shields.io/badge/quality-1080p+-blue) ![Smart](https://img.shields.io/badge/detection-geo--optimized-brightgreen) ![Last Updated](https://img.shields.io/badge/updated-2025-10-24%2009:30%20UTC-blue)
 
 ## 🚀 URL Playlist Tối Ưu Cho Việt Nam
 
@@ -23,7 +23,7 @@ https://raw.githubusercontent.com/susuint/gittv-vn/main/playlist.m3u
   4. 🌍 **Domain TLD**: .vn, .sg, .th, .my...
 
 ### 📊 Thống kê lần cập nhật này
-- 🎬 **Tổng số kênh**: 633
+- 🎬 **Tổng số kênh**: 620
 - 🇻🇳 **VN servers**: 2025
 - 🇸🇬 **SG servers**: 2025
 - ✨ **Smart Finds**: 2025 (kênh USA/Global trên server châu Á!)
