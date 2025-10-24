@@ -1,0 +1,112 @@
+2025-10-24 00:49:07,725 - INFO - ================================================================================
+2025-10-24 00:49:07,725 - INFO - IPTV GENERATOR - SMART GEO-DETECTION (works from ANY GitHub location)
+2025-10-24 00:49:07,725 - INFO - ================================================================================
+2025-10-24 00:49:07,725 - INFO - Detection methods:
+2025-10-24 00:49:07,725 - INFO -   1. CDN Provider Analysis (CloudFlare, Akamai, Asian CDNs...)
+2025-10-24 00:49:07,725 - INFO -   2. IP Address Pattern Matching (Asian IP ranges)
+2025-10-24 00:49:07,725 - INFO -   3. Hosting Provider Detection (DigitalOcean SG, AWS Asia...)
+2025-10-24 00:49:07,725 - INFO -   4. Domain TLD Analysis (.vn, .sg, .th...)
+2025-10-24 00:49:07,726 - INFO - 
+2025-10-24 00:49:07,726 - INFO - ✓ No ping dependency - works from US/EU GitHub servers
+2025-10-24 00:49:07,726 - INFO - ✓ Optimized for Vietnam users regardless of runner location
+2025-10-24 00:49:07,726 - INFO - ================================================================================
+2025-10-24 00:49:07,726 - INFO - 
+[1/3] FETCHING SOURCES
+2025-10-24 00:49:07,726 - INFO - --------------------------------------------------------------------------------
+2025-10-24 00:49:07,726 - INFO - Fetching: https://raw.githubusercontent.com/dishiptv/dish/main/stream.m3u
+2025-10-24 00:49:07,749 - INFO - Fetching: https://raw.githubusercontent.com/LS-Station/streamecho/main/StreamEcho.m3u8
+2025-10-24 00:49:07,750 - INFO - Fetching: https://iptv-org.github.io/iptv/index.m3u
+2025-10-24 00:49:07,750 - INFO - Fetching: https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8
+2025-10-24 00:49:07,750 - INFO - Fetching: https://raw.githubusercontent.com/binhex/iptv/main/eng.m3u
+2025-10-24 00:49:07,751 - INFO - Fetching: https://raw.githubusercontent.com/serdartas/iptv-playlist/main/refined.m3u
+2025-10-24 00:49:07,751 - INFO - Fetching: https://raw.githubusercontent.com/ipstreet312/freeiptv/master/all.m3u
+2025-10-24 00:49:07,751 - INFO - Fetching: https://raw.githubusercontent.com/sultanarabi161/filoox-bdix/main/playlist.m3u
+2025-10-24 00:49:07,753 - INFO - Fetching: https://raw.githubusercontent.com/Miraz6755/Iptv.m3u/main/DaddyLive.m3u
+2025-10-24 00:49:07,753 - INFO - Fetching: https://raw.githubusercontent.com/AAAAAEXQOSyIpN2JZ0ehUQ/iPTV-FREE-LIST/master/iPTV-Free-List_TV.m3u
+2025-10-24 00:49:07,753 - INFO - Fetching: https://raw.githubusercontent.com/dp247/IPTV/master/playlists/playlist_usa.m3u8
+2025-10-24 00:49:07,753 - INFO - Fetching: https://raw.githubusercontent.com/dp247/IPTV/master/playlists/playlist_uk.m3u8
+2025-10-24 00:49:07,753 - INFO - Fetching: https://raw.githubusercontent.com/HabibSay/free_iptv_m3u8/refs/heads/main/all_channels.m3u
+2025-10-24 00:49:07,754 - INFO - Fetching: https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/top-movies.m3u
+2025-10-24 00:49:07,754 - INFO - Fetching: https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/action-movies.m3u
+2025-10-24 00:49:07,754 - INFO - Fetching: https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/comedy-movies.m3u
+2025-10-24 00:49:07,754 - INFO - Fetching: https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/horror-movies.m3u
+2025-10-24 00:52:16,078 - INFO - ✓ 1845 channels from https://raw.githubusercontent.com/Free-TV/IPTV/master/playlist.m3u8
+2025-10-24 00:52:16,097 - ERROR - Error: https://raw.githubusercontent.com/ipstreet312/freeiptv/master/all.m3u - 
+2025-10-24 00:52:16,097 - ERROR - Error: https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/horror-movies.m3u - 
+2025-10-24 00:52:16,097 - ERROR - Error: https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/action-movies.m3u - 
+2025-10-24 00:52:16,097 - ERROR - Error: https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/top-movies.m3u - 
+2025-10-24 00:52:16,097 - ERROR - Error: https://aymrgknetzpucldhpkwm.supabase.co/storage/v1/object/public/tmdb/comedy-movies.m3u - 
+2025-10-24 00:52:16,097 - ERROR - Error: https://raw.githubusercontent.com/binhex/iptv/main/eng.m3u - 
+2025-10-24 00:52:16,098 - ERROR - Error: https://raw.githubusercontent.com/dishiptv/dish/main/stream.m3u - 
+2025-10-24 00:52:16,098 - ERROR - Error: https://raw.githubusercontent.com/serdartas/iptv-playlist/main/refined.m3u - 
+2025-10-24 00:52:16,098 - ERROR - Error: https://raw.githubusercontent.com/sultanarabi161/filoox-bdix/main/playlist.m3u - 
+2025-10-24 00:52:16,098 - ERROR - Error: https://raw.githubusercontent.com/dp247/IPTV/master/playlists/playlist_usa.m3u8 - 
+2025-10-24 00:52:16,098 - ERROR - Error: https://raw.githubusercontent.com/LS-Station/streamecho/main/StreamEcho.m3u8 - 
+2025-10-24 00:52:16,098 - ERROR - Error: https://raw.githubusercontent.com/dp247/IPTV/master/playlists/playlist_uk.m3u8 - 
+2025-10-24 00:52:16,099 - ERROR - Error: https://raw.githubusercontent.com/AAAAAEXQOSyIpN2JZ0ehUQ/iPTV-FREE-LIST/master/iPTV-Free-List_TV.m3u - 
+2025-10-24 00:52:16,099 - ERROR - Error: https://raw.githubusercontent.com/Miraz6755/Iptv.m3u/main/DaddyLive.m3u - 
+2025-10-24 00:52:16,099 - ERROR - Error: https://raw.githubusercontent.com/HabibSay/free_iptv_m3u8/refs/heads/main/all_channels.m3u - 
+2025-10-24 00:52:16,099 - ERROR - Error: https://iptv-org.github.io/iptv/index.m3u - 
+2025-10-24 00:52:16,100 - INFO - 
+Total channels fetched: 1845
+2025-10-24 00:52:16,100 - INFO - After quality pre-filter: 1329
+2025-10-24 00:52:16,100 - INFO - 
+📊 GEO-DETECTION ANALYSIS:
+2025-10-24 00:52:16,100 - INFO - --------------------------------------------------------------------------------
+2025-10-24 00:52:16,100 - INFO -   VN servers: 14
+2025-10-24 00:52:16,101 - INFO -   SG servers: 32
+2025-10-24 00:52:16,101 - INFO -   SEA region: 1
+2025-10-24 00:52:16,101 - INFO -   ASIA region: 36
+2025-10-24 00:52:16,101 - INFO -   CDN (global): 142
+2025-10-24 00:52:16,101 - INFO -   Unknown: 1104
+2025-10-24 00:52:16,101 - INFO - 
+📊 CONFIDENCE LEVELS:
+2025-10-24 00:52:16,101 - INFO -   High (≥80%): 218
+2025-10-24 00:52:16,101 - INFO -   Medium (60-79%): 7
+2025-10-24 00:52:16,101 - INFO -   Low (<60%): 1104
+2025-10-24 00:52:16,101 - INFO - 
+✨ SMART FINDS PREVIEW (Global content on SEA servers):
+2025-10-24 00:52:16,101 - INFO -   → CGTN Français | Server: VN (confidence: 100%)
+2025-10-24 00:52:16,101 - INFO -   → ONE  | Server: SG (confidence: 95%)
+2025-10-24 00:52:16,101 - INFO -   → NDR Hamburg  | Server: SG (confidence: 95%)
+2025-10-24 00:52:16,102 - INFO -   → NDR Mecklenburg-Vorpommern  | Server: SG (confidence: 95%)
+2025-10-24 00:52:16,102 - INFO -   → NDR Niedersachsen  | Server: SG (confidence: 95%)
+2025-10-24 00:52:16,102 - INFO - 
+[2/3] CHECKING CHANNEL AVAILABILITY
+2025-10-24 00:52:16,102 - INFO - --------------------------------------------------------------------------------
+2025-10-24 00:52:36,735 - INFO - Progress: 450/1329 | Working: 209
+2025-10-24 00:52:57,736 - INFO - Progress: 900/1329 | Working: 447
+2025-10-24 00:53:18,603 - INFO - Progress: 1329/1329 | Working: 642
+2025-10-24 00:53:18,611 - INFO - 
+[3/3] FILTERING & GENERATING OUTPUT
+2025-10-24 00:53:18,611 - INFO - --------------------------------------------------------------------------------
+2025-10-24 00:53:18,611 - INFO - Starting SMART geo-filtering on 1329 channels...
+2025-10-24 00:53:18,611 - INFO - Working channels: 642/1329
+2025-10-24 00:53:18,611 - INFO - After quality filter: 642/642
+2025-10-24 00:53:18,611 - INFO - Fast enough: 639/642
+2025-10-24 00:53:18,612 - INFO - After URL dedup: 637
+2025-10-24 00:53:18,613 - INFO - Final channels: 633
+2025-10-24 00:53:18,613 - INFO -   └─ VN: 13 | SG: 22 | SEA: 1 | ASIA: 11 | CDN: 46
+2025-10-24 00:53:18,613 - INFO -   └─ High confidence (≥80%): 86/633
+2025-10-24 00:53:18,613 - INFO -   └─ ✨ SMART FINDS: 8 Global channels on SEA servers!
+2025-10-24 00:53:18,613 - INFO - Generating SMART geo-optimized M3U playlist...
+2025-10-24 00:53:18,616 - INFO - 
+================================================================================
+2025-10-24 00:53:18,616 - INFO - ✓✓✓ SUCCESS! Generated 633 SMART GEO-OPTIMIZED channels
+2025-10-24 00:53:18,616 - INFO - ================================================================================
+2025-10-24 00:53:18,616 - INFO - SMART DETECTION SUMMARY:
+2025-10-24 00:53:18,616 - INFO -   Server Distribution:
+2025-10-24 00:53:18,616 - INFO -     → VN servers: 13
+2025-10-24 00:53:18,617 - INFO -     → SG servers: 22
+2025-10-24 00:53:18,617 - INFO -     → SEA region: 1
+2025-10-24 00:53:18,617 - INFO -     → ASIA region: 11
+2025-10-24 00:53:18,617 - INFO -     → CDN global: 46
+2025-10-24 00:53:18,617 - INFO -   High confidence detections: 86/633 (13%)
+2025-10-24 00:53:18,617 - INFO -   ✨ SMART FINDS: 8 USA/Global channels on SEA servers!
+2025-10-24 00:53:18,617 - INFO - 
+2025-10-24 00:53:18,617 - INFO - Execution time: 4m 10s
+2025-10-24 00:53:18,617 - INFO - Playlist saved to: playlist.m3u
+2025-10-24 00:53:18,617 - INFO - ================================================================================
+2025-10-24 00:53:18,617 - INFO - ✓ Detection works from ANY GitHub Actions location (US/EU/Asia)
+2025-10-24 00:53:18,617 - INFO - ✓ Optimized for Vietnam users based on server geo-location
+2025-10-24 00:53:18,617 - INFO - ================================================================================
