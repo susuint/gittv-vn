@@ -87,188 +87,41 @@ jobs:
       - name: Extract Smart Statistics
         id: stats
         run: |
-          VN_SERVERS="0"
-          SG_SERVERS="0"
-          SMART_FINDS="0"
-          HIGH_CONF="0"
-          
+          VN_SERVERS="0"; SG_SERVERS="0"; SMART_FINDS="0"; HIGH_CONF="0"
           if [ -f "iptv_generator.log" ]; then
-            VN_LINE=$(grep "VN servers:" iptv_generator.log | tail -1 || echo "")
-            if [ -n "$VN_LINE" ]; then
-              VN_SERVERS=$(echo "$VN_LINE" | grep -oE '[0-9]+' | head -1 || echo "0")
-            fi
-            
-            SG_LINE=$(grep "SG servers:" iptv_generator.log | tail -1 || echo "")
-            if [ -n "$SG_LINE" ]; then
-              SG_SERVERS=$(echo "$SG_LINE" | grep -oE '[0-9]+' | head -1 || echo "0")
-            fi
-            
-            SMART_LINE=$(grep "SMART FINDS:" iptv_generator.log | tail -1 || echo "")
-            if [ -n "$SMART_LINE" ]; then
-              SMART_FINDS=$(echo "$SMART_LINE" | grep -oE '[0-9]+' | head -1 || echo "0")
-            fi
-            
-            CONF_LINE=$(grep "High confidence" iptv_generator.log | tail -1 || echo "")
-            if [ -n "$CONF_LINE" ]; then
-              HIGH_CONF=$(echo "$CONF_LINE" | grep -oE '[0-9]+' | head -1 || echo "0")
-            fi
+            VN_LINE=$(grep "VN servers:" iptv_generator.log | tail -1 || echo ""); if [ -n "$VN_LINE" ]; then VN_SERVERS=$(echo "$VN_LINE" | grep -oE '[0-9]+' | head -1 || echo "0"); fi
+            SG_LINE=$(grep "SG servers:" iptv_generator.log | tail -1 || echo ""); if [ -n "$SG_LINE" ]; then SG_SERVERS=$(echo "$SG_LINE" | grep -oE '[0-9]+' | head -1 || echo "0"); fi
+            SMART_LINE=$(grep "SMART FINDS:" iptv_generator.log | tail -1 || echo ""); if [ -n "$SMART_LINE" ]; then SMART_FINDS=$(echo "$SMART_LINE" | grep -oE '[0-9]+' | head -1 || echo "0"); fi
+            CONF_LINE=$(grep "High confidence" iptv_generator.log | tail -1 || echo ""); if [ -n "$CONF_LINE" ]; then HIGH_CONF=$(echo "$CONF_LINE" | grep -oE '[0-9]+' | head -1 || echo "0"); fi
           fi
-          
           echo "vn_servers=${VN_SERVERS}" >> $GITHUB_OUTPUT
           echo "sg_servers=${SG_SERVERS}" >> $GITHUB_OUTPUT
           echo "smart_finds=${SMART_FINDS}" >> $GITHUB_OUTPUT
           echo "high_conf=${HIGH_CONF}" >> $GITHUB_OUTPUT
-          
           echo "📊 Extracted stats: VN=${VN_SERVERS}, SG=${SG_SERVERS}, Smart=${SMART_FINDS}, HighConf=${HIGH_CONF}"
 
-      - name: Generate README
-        # SỬA LỖI TẠI ĐÂY: Dùng `env` để truyền biến vào, tránh lỗi cú pháp YAML
-        env:
-          REPO: ${{ github.repository }}
-          CHANNELS: ${{ steps.validate.outputs.channels }}
-          VN_SERVERS: ${{ steps.stats.outputs.vn_servers }}
-          SG_SERVERS: ${{ steps.stats.outputs.sg_servers }}
-          SMART_FINDS: ${{ steps.stats.outputs.smart_finds }}
-          HIGH_CONF: ${{ steps.stats.outputs.high_conf }}
+      - name: Generate README from template
+        id: generate_readme
         run: |
-          # Xử lý thời gian và mã hóa URL riêng để làm code sạch hơn
           UPDATED_TIME=$(date -u +"%Y-%m-%d %H:%M UTC")
           UPDATED_TIME_ENCODED=$(echo "$UPDATED_TIME" | sed 's/ /%20/g')
 
-          cat > README.md << EOF
-# 📺 IPTV Playlist Generator - SMART Geo-Detection
-
-![Status](https://github.com/${REPO}/actions/workflows/update-playlist-smart.yml/badge.svg) ![Channels](https://img.shields.io/badge/channels-${CHANNELS}-success) ![Quality](https://img.shields.io/badge/quality-1080p+-blue) ![Smart](https://img.shields.io/badge/detection-geo--optimized-brightgreen) ![Last Updated](https://img.shields.io/badge/updated-${UPDATED_TIME_ENCODED}-blue)
-
-## 🚀 URL Playlist Tối Ưu Cho Việt Nam
-
-**Tự động phát hiện server gần Việt Nam - Hoạt động từ bất kỳ vị trí GitHub Actions nào!**
-
-\`\`\`
-https://raw.githubusercontent.com/${REPO}/main/playlist.m3u
-\`\`\`
-
----
-
-## ✨ Đặc điểm SMART Geo-Detection
-
-### 🎯 Công nghệ phát hiện thông minh
-- ✅ **Không phụ thuộc ping** - Hoạt động từ GitHub Actions US/EU/Asia
-- ✅ **4 phương pháp phát hiện**:
-  1. 🌐 **CDN Analysis**: CloudFlare, Akamai, Asian CDNs...
-  2. 🔢 **IP Pattern Matching**: Nhận diện IP ranges châu Á
-  3. 🏢 **Hosting Provider**: DigitalOcean SG, AWS Asia, Alibaba Cloud...
-  4. 🌍 **Domain TLD**: .vn, .sg, .th, .my...
-
-### 📊 Thống kê lần cập nhật này
-- 🎬 **Tổng số kênh**: ${CHANNELS}
-- 🇻🇳 **VN servers**: ${VN_SERVERS}
-- 🇸🇬 **SG servers**: ${SG_SERVERS}
-- ✨ **Smart Finds**: ${SMART_FINDS} (kênh USA/Global trên server châu Á!)
-- ✓ **High confidence**: ${HIGH_CONF}
-
-### 🎯 Ưu điểm vượt trội
-
-#### 1. **Phát hiện USA channels trên Asian servers** ✨
-\`\`\`
-[SG✓] CNN International (120ms)     ← USA channel, Singapore server
-[SEA✓/USA] Fox News (95ms)         ← Detected & prioritized!
-[ASIA-CDN✓] BBC World (150ms)      ← UK channel, Asian CDN
-\`\`\`
-
-#### 2. **Không bỏ sót kênh tốt**
-- Code cũ: Loại bỏ tất cả kênh USA → **MẤT nhiều kênh tốt**
-- Code SMART: Phát hiện server thật → **GIỮ LẠI kênh USA trên server SG/Asia**
-
-#### 3. **Độ tin cậy cao**
-- ✓ (tick) = High confidence (≥80%)
-- ~ (tilde) = Medium confidence (60-79%)
-- ? (question) = Low confidence (<60%)
-
----
-
-## 📱 Hướng dẫn sử dụng
-
-### 1. Cho VLC Media Player
-1. Mở VLC → **Media** → **Open Network Stream** (Ctrl+N)
-2. Dán URL playlist vào
-3. Click **Play**
-
-### 2. Cho TiviMate (Android TV)
-1. Mở TiviMate → **Settings** → **Playlists**
-2. Click **Add Playlist** → **URL**
-3. Dán URL và đặt tên
-4. **Save**
-
-### 3. Cho Kodi
-1. Install **IPTV Simple Client** addon
-2. Settings → **M3U Play List URL**
-3. Dán URL playlist
-4. Enable addon
-
----
-
-## 🕐 Lịch trình tự động cập nhật
-
-- **2 lần mỗi ngày**: 09:00 và 21:00 (UTC)
-- **Tự động phát hiện** server mới gần Việt Nam
-- **Loại bỏ** kênh chết hoặc server xa
-- **Ưu tiên** kênh chất lượng cao (≥1080p)
-
----
-
-## 📊 So sánh với phương pháp cũ
-
-| Tiêu chí | Phương pháp Cũ | SMART Geo-Detection |
-|----------|----------------|---------------------|
-| **Phát hiện server** | Dựa vào tên kênh | ✅ Phân tích IP/CDN/Domain |
-| **Độ chính xác** | ~60% | ✅ ~95% |
-| **USA channels on Asian servers** | ❌ Bỏ qua | ✅ Phát hiện & ưu tiên |
-| **Hoạt động từ GitHub US** | ❌ Không chính xác | ✅ Hoàn hảo |
-| **Smart Finds** | 0 | ✅ ${SMART_FINDS} kênh |
-
----
-
-## 🛡️ Chất lượng được đảm bảo
-
-- ✅ Chỉ kênh **≥1080p** (FHD/4K)
-- ✅ Server **gần Việt Nam** (VN/SG/SEA)
-- ✅ Ping được **tối ưu hóa** (với geographic bonus)
-- ✅ Loại bỏ các quốc gia: Bangladesh, Belarus, Costa Rica, India, Mexico, Laos
-
----
-
-## 💡 FAQ
-
-**Q: Tại sao có kênh USA/UK trong playlist?**
-A: Vì chúng sử dụng server tại Singapore hoặc châu Á! Chất lượng streaming rất tốt cho người dùng Việt Nam.
-
-**Q: Làm sao phân biệt server location?**
-A: Xem ký hiệu trong tên kênh:
-- \`[VN✓]\` = Server Việt Nam
-- \`[SG✓]\` = Server Singapore
-- \`[SEA✓]\` = Server Đông Nam Á
-- \`[ASIA-CDN✓]\` = CDN châu Á
-
-**Q: Playlist có hoạt động ở nước ngoài không?**
-A: Có! Nhưng được tối ưu tốt nhất cho Việt Nam và khu vực Đông Nam Á.
-
----
-
-## 📜 License
-
-MIT License - Tự do sử dụng và chia sẻ
-
----
-
-**Generated by GitHub Actions** - SMART Geo-Detection System
-*Tối ưu hóa cho người dùng Việt Nam - Hoạt động từ mọi vị trí server*
-EOF
+          # Đọc file template và thay thế các placeholder một cách an toàn
+          < README.template.md sed \
+            -e "s|__REPO__|${{ github.repository }}|g" \
+            -e "s|__CHANNELS__|${{ steps.validate.outputs.channels }}|g" \
+            -e "s|__VN_SERVERS__|${{ steps.stats.outputs.vn_servers }}|g" \
+            -e "s|__SG_SERVERS__|${{ steps.stats.outputs.sg_servers }}|g" \
+            -e "s|__SMART_FINDS__|${{ steps.stats.outputs.smart_finds }}|g" \
+            -e "s|__HIGH_CONF__|${{ steps.stats.outputs.high_conf }}|g" \
+            -e "s|__UPDATED_TIME_ENCODED__|${UPDATED_TIME_ENCODED}|g" \
+            > README.md
 
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "🔄 SMART Update: ${{ steps.validate.outputs.channels }} channels | VN:${{ steps.stats.outputs.vn_servers }} SG:${{ steps.stats.outputs.sg_servers }} | Smart:${{ steps.stats.outputs.smart_finds }}"
-          file_pattern: "${{ env.OUTPUT_FILENAME }} README.md iptv_generator.log"
+          # Quan trọng: Thêm README.template.md vào file_pattern để commit lần đầu
+          file_pattern: "${{ env.OUTPUT_FILENAME }} README.md iptv_generator.log README.template.md"
           commit_user_name: IPTV Smart Bot
           commit_user_email: fan7gi@gmail.com
