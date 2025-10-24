@@ -87,32 +87,27 @@ jobs:
       - name: Extract Smart Statistics
         id: stats
         run: |
-          # Extract statistics from log file with safer parsing
           VN_SERVERS="0"
           SG_SERVERS="0"
           SMART_FINDS="0"
           HIGH_CONF="0"
           
           if [ -f "iptv_generator.log" ]; then
-            # Extract VN servers count
             VN_LINE=$(grep "VN servers:" iptv_generator.log | tail -1 || echo "")
             if [ -n "$VN_LINE" ]; then
               VN_SERVERS=$(echo "$VN_LINE" | grep -oE '[0-9]+' | head -1 || echo "0")
             fi
             
-            # Extract SG servers count
             SG_LINE=$(grep "SG servers:" iptv_generator.log | tail -1 || echo "")
             if [ -n "$SG_LINE" ]; then
               SG_SERVERS=$(echo "$SG_LINE" | grep -oE '[0-9]+' | head -1 || echo "0")
             fi
             
-            # Extract SMART FINDS count
             SMART_LINE=$(grep "SMART FINDS:" iptv_generator.log | tail -1 || echo "")
             if [ -n "$SMART_LINE" ]; then
               SMART_FINDS=$(echo "$SMART_LINE" | grep -oE '[0-9]+' | head -1 || echo "0")
             fi
             
-            # Extract high confidence count
             CONF_LINE=$(grep "High confidence" iptv_generator.log | tail -1 || echo "")
             if [ -n "$CONF_LINE" ]; then
               HIGH_CONF=$(echo "$CONF_LINE" | grep -oE '[0-9]+' | head -1 || echo "0")
@@ -135,141 +130,20 @@ jobs:
           HIGH_CONF="${{ steps.stats.outputs.high_conf }}"
           UPDATED_TIME=$(date -u +"%Y-%m-%d %H:%M UTC")
           REPO="${{ github.repository }}"
-          
-          # Create README using printf to avoid YAML conflicts
-          printf '%s\n' \
-            "# 📺 IPTV Playlist Generator - SMART Geo-Detection" \
-            "" \
-            "![Status](https://github.com/${REPO}/actions/workflows/update-playlist-smart.yml/badge.svg)" \
-            "![Channels](https://img.shields.io/badge/channels-${CHANNELS}-success)" \
-            "![Quality](https://img.shields.io/badge/quality-1080p+-blue)" \
-            "![Smart](https://img.shields.io/badge/detection-geo--optimized-brightgreen)" \
-            "![Last Updated](https://img.shields.io/badge/updated-${UPDATED_TIME// /%20}-blue)" \
-            "" \
-            "## 🚀 URL Playlist Tối Ưu Cho Việt Nam" \
-            "" \
-            "**Tự động phát hiện server gần Việt Nam - Hoạt động từ bất kỳ vị trí GitHub Actions nào!**" \
-            "" \
-            '```' \
-            "https://raw.githubusercontent.com/${REPO}/main/playlist.m3u" \
-            '```' \
-            "" \
-            "---" \
-            "" \
-            "## ✨ Đặc điểm SMART Geo-Detection" \
-            "" \
-            "### 🎯 Công nghệ phát hiện thông minh" \
-            "- ✅ **Không phụ thuộc ping** - Hoạt động từ GitHub Actions US/EU/Asia" \
-            "- ✅ **4 phương pháp phát hiện**:" \
-            "  1. 🌐 **CDN Analysis**: CloudFlare, Akamai, Asian CDNs..." \
-            "  2. 🔢 **IP Pattern Matching**: Nhận diện IP ranges châu Á" \
-            "  3. 🏢 **Hosting Provider**: DigitalOcean SG, AWS Asia, Alibaba Cloud..." \
-            "  4. 🌍 **Domain TLD**: .vn, .sg, .th, .my..." \
-            "" \
-            "### 📊 Thống kê lần cập nhật này" \
-            "- 🎬 **Tổng số kênh**: ${CHANNELS}" \
-            "- 🇻🇳 **VN servers**: ${VN_SERVERS}" \
-            "- 🇸🇬 **SG servers**: ${SG_SERVERS}" \
-            "- ✨ **Smart Finds**: ${SMART_FINDS} (kênh USA/Global trên server châu Á!)" \
-            "- ✓ **High confidence**: ${HIGH_CONF}" \
-            "" \
-            "### 🎯 Ưu điểm vượt trội" \
-            "" \
-            "#### 1. **Phát hiện USA channels trên Asian servers** ✨" \
-            '```' \
-            "[SG✓] CNN International (120ms)     ← USA channel, Singapore server" \
-            "[SEA✓/USA] Fox News (95ms)         ← Detected & prioritized!" \
-            "[ASIA-CDN✓] BBC World (150ms)      ← UK channel, Asian CDN" \
-            '```' \
-            "" \
-            "#### 2. **Không bỏ sót kênh tốt**" \
-            "- Code cũ: Loại bỏ tất cả kênh USA → **MẤT nhiều kênh tốt**" \
-            "- Code SMART: Phát hiện server thật → **GIỮ LẠI kênh USA trên server SG/Asia**" \
-            "" \
-            "#### 3. **Độ tin cậy cao**" \
-            "- ✓ (tick) = High confidence (≥80%)" \
-            "- ~ (tilde) = Medium confidence (60-79%)" \
-            "- ? (question) = Low confidence (<60%)" \
-            "" \
-            "---" \
-            "" \
-            "## 📱 Hướng dẫn sử dụng" \
-            "" \
-            "### 1. Cho VLC Media Player" \
-            "1. Mở VLC → **Media** → **Open Network Stream** (Ctrl+N)" \
-            "2. Dán URL playlist vào" \
-            "3. Click **Play**" \
-            "" \
-            "### 2. Cho TiviMate (Android TV)" \
-            "1. Mở TiviMate → **Settings** → **Playlists**" \
-            "2. Click **Add Playlist** → **URL**" \
-            "3. Dán URL và đặt tên" \
-            "4. **Save**" \
-            "" \
-            "### 3. Cho Kodi" \
-            "1. Install **IPTV Simple Client** addon" \
-            "2. Settings → **M3U Play List URL**" \
-            "3. Dán URL playlist" \
-            "4. Enable addon" \
-            "" \
-            "---" \
-            "" \
-            "## 🕐 Lịch trình tự động cập nhật" \
-            "" \
-            "- **2 lần mỗi ngày**: 09:00 và 21:00 (UTC)" \
-            "- **Tự động phát hiện** server mới gần Việt Nam" \
-            "- **Loại bỏ** kênh chết hoặc server xa" \
-            "- **Ưu tiên** kênh chất lượng cao (≥1080p)" \
-            "" \
-            "---" \
-            "" \
-            "## 📊 So sánh với phương pháp cũ" \
-            "" \
-            "| Tiêu chí | Phương pháp Cũ | SMART Geo-Detection |" \
-            "|----------|----------------|---------------------|" \
-            "| **Phát hiện server** | Dựa vào tên kênh | ✅ Phân tích IP/CDN/Domain |" \
-            "| **Độ chính xác** | ~60% | ✅ ~95% |" \
-            "| **USA channels on Asian servers** | ❌ Bỏ qua | ✅ Phát hiện & ưu tiên |" \
-            "| **Hoạt động từ GitHub US** | ❌ Không chính xác | ✅ Hoàn hảo |" \
-            "| **Smart Finds** | 0 | ✅ ${SMART_FINDS} kênh |" \
-            "" \
-            "---" \
-            "" \
-            "## 🛡️ Chất lượng được đảm bảo" \
-            "" \
-            "- ✅ Chỉ kênh **≥1080p** (FHD/4K)" \
-            "- ✅ Server **gần Việt Nam** (VN/SG/SEA)" \
-            "- ✅ Ping được **tối ưu hóa** (với geographic bonus)" \
-            "- ✅ Loại bỏ các quốc gia: Bangladesh, Belarus, Costa Rica, India, Mexico, Laos" \
-            "" \
-            "---" \
-            "" \
-            "## 💡 FAQ" \
-            "" \
-            "**Q: Tại sao có kênh USA/UK trong playlist?**" \
-            "A: Vì chúng sử dụng server tại Singapore hoặc châu Á! Chất lượng streaming rất tốt cho người dùng Việt Nam." \
-            "" \
-            "**Q: Làm sao phân biệt server location?**" \
-            "A: Xem ký hiệu trong tên kênh:" \
-            "- \`[VN✓]\` = Server Việt Nam" \
-            "- \`[SG✓]\` = Server Singapore" \
-            "- \`[SEA✓]\` = Server Đông Nam Á" \
-            "- \`[ASIA-CDN✓]\` = CDN châu Á" \
-            "" \
-            "**Q: Playlist có hoạt động ở nước ngoài không?**" \
-            "A: Có! Nhưng được tối ưu tốt nhất cho Việt Nam và khu vực Đông Nam Á." \
-            "" \
-            "---" \
-            "" \
-            "## 📜 License" \
-            "" \
-            "MIT License - Tự do sử dụng và chia sẻ" \
-            "" \
-            "---" \
-            "" \
-            "**Generated by GitHub Actions** - SMART Geo-Detection System" \
-            "*Tối ưu hóa cho người dùng Việt Nam - Hoạt động từ mọi vị trí server*" \
-            > README.md
+
+          # Sử dụng 'cat << EOF' để tạo file README.md. Cách này dễ đọc và quản lý hơn 'printf'.
+          cat > README.md << EOF
+# 📺 IPTV Playlist Generator - SMART Geo-Detection
+
+![Status](https://github.com/${REPO}/actions/workflows/update-playlist-smart.yml/badge.svg) ![Channels](https://img.shields.io/badge/channels-${CHANNELS}-success) ![Quality](https://img.shields.io/badge/quality-1080p+-blue) ![Smart](https://img.shields.io/badge/detection-geo--optimized-brightgreen) ![Last Updated](https://img.shields.io/badge/updated-${UPDATED_TIME// /%20}-blue)
+
+## 🚀 URL Playlist Tối Ưu Cho Việt Nam
+
+**Tự động phát hiện server gần Việt Nam - Hoạt động từ bất kỳ vị trí GitHub Actions nào!**
+
+\`\`\`
+https://raw.githubusercontent.com/${REPO}/main/playlist.m3u
+\`\`\`
 
 ---
 
@@ -293,11 +167,11 @@ jobs:
 ### 🎯 Ưu điểm vượt trội
 
 #### 1. **Phát hiện USA channels trên Asian servers** ✨
-```
+\`\`\`
 [SG✓] CNN International (120ms)     ← USA channel, Singapore server
 [SEA✓/USA] Fox News (95ms)         ← Detected & prioritized!
 [ASIA-CDN✓] BBC World (150ms)      ← UK channel, Asian CDN
-```
+\`\`\`
 
 #### 2. **Không bỏ sót kênh tốt**
 - Code cũ: Loại bỏ tất cả kênh USA → **MẤT nhiều kênh tốt**
@@ -307,42 +181,6 @@ jobs:
 - ✓ (tick) = High confidence (≥80%)
 - ~ (tilde) = Medium confidence (60-79%)
 - ? (question) = Low confidence (<60%)
-
----
-
-## 🔧 Cách thức hoạt động
-
-### Phát hiện vị trí server (KHÔNG dùng ping):
-
-```python
-# Ví dụ thực tế
-URL: https://stream.example.com/channel.m3u8
-
-✓ Check 1: CDN Provider
-  → Detect CloudFlare → Has Vietnam edge servers → Score: 95
-
-✓ Check 2: IP Address
-  → Resolve IP: 103.28.36.50
-  → Match pattern "103." → Vietnam/SEA IP → Score: 100
-
-✓ Check 3: Hosting Provider
-  → Domain contains "digitalocean"
-  → Has Singapore datacenter → Score: 85
-
-✓ Check 4: TLD
-  → Domain ends with .sg → Singapore → Score: 85
-
-→ FINAL: Server location = SEA, Confidence = 95%
-→ Apply 70% ping bonus for Vietnam users
-```
-
-### Ưu tiên thông minh:
-
-1. **VN servers** (Vietnam) - Độ ưu tiên cao nhất
-2. **SG servers** (Singapore) - Hub IPTV lớn nhất khu vực
-3. **SEA servers** (Southeast Asia)
-4. **ASIA-CDN** (Asian CDN networks)
-5. **GLOBAL-CDN** (CloudFlare, Akamai với edge SEA)
 
 ---
 
@@ -364,12 +202,6 @@ URL: https://stream.example.com/channel.m3u8
 2. Settings → **M3U Play List URL**
 3. Dán URL playlist
 4. Enable addon
-
-### 4. Cho Perfect Player (Mobile)
-1. Settings → **Playlist**
-2. Click **+** → **URL**
-3. Dán URL
-4. **OK**
 
 ---
 
@@ -403,18 +235,6 @@ URL: https://stream.example.com/channel.m3u8
 
 ---
 
-## 🔍 Ví dụ Output
-
-```
-[VN✓] VTV1 HD (45ms)                    ← Vietnam server, high confidence
-[SG✓] CNN International (120ms)         ← USA channel, Singapore server
-[SEA-CDN✓] Discovery Asia (180ms)       ← Asian CDN
-[ASIA✓/USA] Fox Sports (210ms)          ← USA channel, Asian server
-[GLOBAL-CDN~] BBC World News (380ms)    ← Medium confidence
-```
-
----
-
 ## 💡 FAQ
 
 **Q: Tại sao có kênh USA/UK trong playlist?**
@@ -422,21 +242,13 @@ A: Vì chúng sử dụng server tại Singapore hoặc châu Á! Chất lượn
 
 **Q: Làm sao phân biệt server location?**
 A: Xem ký hiệu trong tên kênh:
-- `[VN✓]` = Server Việt Nam
-- `[SG✓]` = Server Singapore  
-- `[SEA✓]` = Server Đông Nam Á
-- `[ASIA-CDN✓]` = CDN châu Á
+- \`[VN✓]\` = Server Việt Nam
+- \`[SG✓]\` = Server Singapore
+- \`[SEA✓]\` = Server Đông Nam Á
+- \`[ASIA-CDN✓]\` = CDN châu Á
 
 **Q: Playlist có hoạt động ở nước ngoài không?**
 A: Có! Nhưng được tối ưu tốt nhất cho Việt Nam và khu vực Đông Nam Á.
-
----
-
-## 🤝 Đóng góp
-
-Nếu bạn tìm thấy source IPTV tốt hoặc có đề xuất cải thiện:
-1. Mở **Issue** trên GitHub
-2. Hoặc tạo **Pull Request**
 
 ---
 
@@ -448,7 +260,6 @@ MIT License - Tự do sử dụng và chia sẻ
 
 **Generated by GitHub Actions** - SMART Geo-Detection System
 *Tối ưu hóa cho người dùng Việt Nam - Hoạt động từ mọi vị trí server*
-
 EOF
 
       - name: Commit Changes
