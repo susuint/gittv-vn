@@ -122,6 +122,7 @@ jobs:
           echo "📊 Extracted stats: VN=${VN_SERVERS}, SG=${SG_SERVERS}, Smart=${SMART_FINDS}, HighConf=${HIGH_CONF}"
 
       - name: Generate README
+        # SỬA LỖI TẠI ĐÂY: Thêm ký tự '|' để báo cho YAML đây là một khối script
         run: |
           CHANNELS="${{ steps.validate.outputs.channels }}"
           VN_SERVERS="${{ steps.stats.outputs.vn_servers }}"
@@ -131,7 +132,6 @@ jobs:
           UPDATED_TIME=$(date -u +"%Y-%m-%d %H:%M UTC")
           REPO="${{ github.repository }}"
 
-          # Sử dụng 'cat << EOF' để tạo file README.md. Cách này dễ đọc và quản lý hơn 'printf'.
           cat > README.md << EOF
 # 📺 IPTV Playlist Generator - SMART Geo-Detection
 
